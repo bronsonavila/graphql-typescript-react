@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import LaunchList from 'components/LaunchList';
 import LaunchProfile from 'components/LaunchProfile';
 
 const App = () => {
+  const [id, setId] = useState(1);
+
   return (
     <Container>
-      <LaunchList />
-      <LaunchProfile />
+      <LaunchList changeId={(id: number) => setId(id)} />
+      <LaunchProfile id={id} />
     </Container>
   );
 };

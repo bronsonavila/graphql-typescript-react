@@ -2,19 +2,26 @@ import styled from 'styled-components';
 
 import { LaunchListQuery } from 'generated/graphql';
 
-interface Props {
+export interface LaunchListProps {
+  changeId: (id: number) => void;
+}
+
+interface Props extends LaunchListProps {
   data: LaunchListQuery;
 }
 
-const LaunchList: React.FC<Props> = ({ data }) => (
+const LaunchList: React.FC<Props> = ({ changeId, data }) => (
   <Container>
     <h3>Launches</h3>
     <List>
       {!!data.launches &&
         data.launches.map(
-          (launch, i) =>
+          (launch) =>
             !!launch && (
-              <ListItem key={i}>
+              <ListItem
+                key={`${launch.flight_number}-${launch.mission_name}`}
+                onClick={() => changeId(launch.flight_number as number)}
+              >
                 {launch.mission_name} ({launch.launch_year})
               </ListItem>
             )
